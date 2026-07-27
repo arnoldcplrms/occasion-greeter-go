@@ -1,0 +1,30 @@
+# Birthday & Anniversary Greeter (Go) - .gitignore
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Build output
+bin/
+dist/
+*.exe
+*.test
+*.out
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+*.sublime-*
+.DS_Store
+
+# Logs
+*.log
+logs/
+
+# Runtime
+tmp/
+temp/
