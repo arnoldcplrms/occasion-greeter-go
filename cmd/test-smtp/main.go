@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"os"
 	"strconv"
 
@@ -12,7 +11,7 @@ import (
 
 func main() {
 	if err := godotenv.Load(); err != nil {
-		log.Printf("No .env file loaded (continuing): %v", err)
+		fmt.Println("No .env file loaded (continuing)")
 	}
 
 	host := os.Getenv("SMTP_HOST")

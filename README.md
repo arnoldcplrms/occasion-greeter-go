@@ -59,39 +59,9 @@ occasion-greeter-go/
 - A SMTP service (Gmail, SendGrid, etc.)
 - A GitHub repository (for the cron workflow)
 
-### 2. Environment Variables
+### 2. Build & Run
 
-Copy `.env.example` to `.env` for local development:
-
-```bash
-cp .env.example .env
-```
-
-Required variables:
-
-```env
-# CSV source (typically an exported Google Sheet)
-CSV_URL=https://docs.google.com/spreadsheets/d/<FILE_ID>/export?format=csv
-
-# Public manifest URL containing birthday and anniversary photo links
-OCCASION_PHOTO_MANIFEST_URL=https://drive.google.com/file/d/<MANIFEST_FILE_ID>/view?usp=sharing
-
-# Comma-separated list of recipients
-RECIPIENT_EMAIL=you@example.com
-
-# SMTP configuration
-SMTP_HOST=smtp.gmail.com
-SMTP_PORT=587
-SMTP_USER=you@example.com
-SMTP_PASSWORD=your-app-password
-```
-
-Drive files referenced by the manifest must be shared as **Anyone with the
-link can view**.
-
-### 3. Build & Run
-
-```bash
+```Shell
 # Fetch dependencies
 go mod download
 
@@ -105,9 +75,9 @@ go build -o bin/greeter ./cmd/greeter
 go run ./cmd/test-smtp
 ```
 
-### 4. Run Tests
+### 3. Run Tests
 
-```bash
+```Shell
 go test ./...
 ```
 
@@ -172,22 +142,22 @@ same as the original project (`birthday` and `wedding_anniversary` maps).
 The CSV must contain these header columns (Google Sheets auto-quotes the
 header names):
 
-| Column | Required | Notes |
-| --- | --- | --- |
-| `Male's First Name` | ✅ | |
-| `Male's Last Name` | | Falls back to `coupleLastName` if empty |
-| `Male's Nickname (If Applicable)` | | Falls back to first name |
-| `Male's Birthday` | | `DD/MM/YYYY` |
-| `Male's Email Address` | | Used to look up the celebrant photo |
-| `Male's Profile Picture` | | Fallback if no manifest entry |
-| `Female's First Name` | ✅ | |
-| `Female's Last Name` | | |
-| `Female's Nickname (If Applicable)` | | |
-| `Female's Birthday` | | `DD/MM/YYYY` |
-| `Female's Email Address` | | |
-| `Female's Profile Picture` | | |
-| `Couple's Profile Picture` | | Used for the anniversary photo |
-| `Wedding Anniversary (...)` | | `DD/MM/YYYY` |
+| Column                              | Required | Notes                                   |
+| ----------------------------------- | -------- | --------------------------------------- |
+| `Male's First Name`                 | ✅       |                                         |
+| `Male's Last Name`                  |          | Falls back to `coupleLastName` if empty |
+| `Male's Nickname (If Applicable)`   |          | Falls back to first name                |
+| `Male's Birthday`                   |          | `DD/MM/YYYY`                            |
+| `Male's Email Address`              |          | Used to look up the celebrant photo     |
+| `Male's Profile Picture`            |          | Fallback if no manifest entry           |
+| `Female's First Name`               | ✅       |                                         |
+| `Female's Last Name`                |          |                                         |
+| `Female's Nickname (If Applicable)` |          |                                         |
+| `Female's Birthday`                 |          | `DD/MM/YYYY`                            |
+| `Female's Email Address`            |          |                                         |
+| `Female's Profile Picture`          |          |                                         |
+| `Couple's Profile Picture`          |          | Used for the anniversary photo          |
+| `Wedding Anniversary (...)`         |          | `DD/MM/YYYY`                            |
 
 CamelCase column names also work; the loader only remaps the human-readable
 Google Sheets names.
@@ -205,7 +175,7 @@ note explaining that no photo is available.
 
 The workflow runs at **9 AM Philippine Time** every day:
 
-```yaml
+```YAML
 - cron: '0 1 * * *' # 1 AM UTC = 9 AM PH (UTC+8)
 ```
 
@@ -235,7 +205,7 @@ SendGrid, Outlook, etc.).
 The `cmd/test-smtp` subcommand performs a quick SMTP dial test using the
 current `.env` / environment variables. Use it whenever you change credentials:
 
-```bash
+```Shell
 go run ./cmd/test-smtp
 ```
 
