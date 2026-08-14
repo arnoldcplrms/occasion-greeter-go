@@ -2,7 +2,7 @@ name: Birthday & Anniversary Greeter (Go)
 
 on:
   schedule:
-    - cron: '0 1 2-30/2 * *' # 9 AM PH time (UTC+8) = 1 AM UTC, even dates only
+    - cron: '0 17 2-30/2 * *' # 1 AM PH time (UTC+8) = 5 PM UTC previous day, even dates only
   workflow_dispatch: # Allow manual trigger
 
 jobs:
